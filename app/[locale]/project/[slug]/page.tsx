@@ -1,25 +1,30 @@
 import { notFound } from "next/navigation";
-import type { Locale } from "@/lib/i18n";
 import { getAllProjects, getProjectBySlug } from "@/lib/projects";
+import type { Locale } from "@/lib/i18n";
 import Mdx from "@/components/Mdx";
 
 export async function generateStaticParams() {
-  const projects = await getAllProjects();
   const locales: Locale[] = ["en", "el"];
-  return projects.flatMap((p) => locales.map((l) => ({ locale: l, slug: p.slug })));
+  const perLocale = await Promise.all(
+    locales.map(async (l) => {
+      const items = await getAllProjects(l);
+      return items.map((p) => ({ locale: l, slug: p.slug }));
+    })
+  );
+  return perLocale.flat();
 }
 
 export default async function ProjectPage({
   params,
 }: {
-  params: Promise<{ slug: string; locale: Locale }>;
+  params: Promise<{ locale: Locale; slug: string }>;
 }) {
-  const { slug } = await params;
-  const project = await getProjectBySlug(slug);
+  const { locale, slug } = await params;
+  const project = await getProjectBySlug(locale, slug);
   if (!project) return notFound();
 
   return (
-    <article className="prose prose-invert max-w-none">
+    <article className="prose prose-invert max-w-5xl mx-auto">
       <h1>{project.title}</h1>
       {project.summary && <p className="text-gray-400">{project.summary}</p>}
       <Mdx source={project.content} />
