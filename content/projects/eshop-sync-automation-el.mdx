@@ -1,0 +1,50 @@
+---
+slug: eshop-sync-automation
+title: E-shop Sync Automation
+year: 2025
+stack:
+  - Python
+  - WooCommerce REST API
+  - Shopify Admin API
+  - GraphQL
+  - Docker
+summary: Πλήρης συγχρονισμός (create/update/delete) μεταξύ WooCommerce και Shopify με custom mapping & ασφαλές cleanup.
+locale: el
+---
+
+> Αυτοματοποιημένος ημερήσιος συγχρονισμός μεταξύ WooCommerce και Shopify με custom mapping, ασφαλή updates και cleanup.
+
+![Διάγραμμα ροής](/projects/eshop-sync-automation/flow.png "Αρχιτεκτονική ροής συγχρονισμού")
+
+## Περιγραφή
+
+Αξιόπιστο pipeline που **διαβάζει** προϊόντα από WooCommerce, τα **χαρτογραφεί** στο σχήμα του Shopify και κάνει **πλήρη συγχρονισμό**:
+
+- **Δημιουργία** νέων
+- **Ενημέρωση** όσων άλλαξαν
+- **Διαγραφή** όσων αφαιρέθηκαν/απενεργοποιήθηκαν (προαιρετικό)
+
+Τρέχει **καθημερινά** (cron/Docker) με **logs** και χειρισμό retries.
+
+## Δυνατότητες
+
+- **Custom mapping**: κατηγορίες → `product_type` & tags, brand → vendor, attributes → variants/options, εξομάλυνση εικόνων.
+- **SKU ως μοναδικό κλειδί** για αναζήτηση/updates.
+- **Ασφαλές cleanup** με φίλτρο vendor & **dry-run**.
+- **Σεβασμός rate limits** με backoff/batching.
+
+## Κανόνες Mapping (ενδεικτικά)
+
+- `category_path` → πρώτο node ως `product_type`, υπόλοιπα ως `tags`
+- `manufacturer` → `vendor`
+- Διαθεσιμότητα/στοκ → publish & inventory
+- HTML περιγραφές → καθαρισμός ή plain-text
+
+![Παράδειγμα mapping](/projects/eshop-sync-automation/mapping.png "Χαρτογράφηση κατηγοριών & χαρακτηριστικών")
+
+## Schedule & Deployment
+
+- Docker image, ρυθμίσεις από `.env`
+- Εκτέλεση με **cron**, **GitHub Actions** ή server scheduler
+
+**Αποτέλεσμα:** Συνεπής κατάλογος στο Shopify, **πάντα ευθυγραμμισμένος** με το WooCommerce — χωρίς διπλότυπα.

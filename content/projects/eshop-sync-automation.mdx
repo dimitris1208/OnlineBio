@@ -1,0 +1,45 @@
+---
+slug: eshop-sync-automation
+title: E-shop Sync Automation
+year: 2025
+stack:
+  - Python
+  - WooCommerce REST API
+  - Shopify Admin API
+  - GraphQL
+  - Docker
+summary: Full sync (create/update/delete) between WooCommerce and Shopify with custom mapping & safe cleanup.
+locale: en
+---
+
+> Automated daily sync between WooCommerce and Shopify with custom mapping, safe updates, and cleanup.
+
+![Sync flow](/projects/eshop-sync-automation/flow.png "High-level sync flow")
+
+## Overview
+A robust, idempotent pipeline that **reads WooCommerce** products, **maps** them to Shopify schema, and **performs full sync**:
+- **Create** missing products
+- **Update** changed products
+- **Delete** products removed/disabled at the source (configurable)
+
+Runs on a **daily schedule** (cron/Docker) with **audit logs** and retry logic.
+
+## Key Capabilities
+- **Custom mapping**: categories → `product_type` & tags; brand → vendor; attributes → variants/options; images normalization.
+- **SKU as source of truth** for lookup & updates.
+- **Safe cleanup**: optional vendor filter + dry-run before deletions.
+- **Rate-limit aware**: backoff & batching for Shopify API.
+
+## Mapping Rules (example)
+- `category_path` → first node as `product_type`, rest as `tags`
+- `manufacturer` → `vendor`
+- Stock flags → publish status & inventory quantities
+- HTML descriptions → sanitized / plain-text fallback
+
+![Mapping example](/projects/eshop-sync-automation/mapping.png "Category & attributes mapping")
+
+## Schedule & Deployment
+- Dockerized job with `.env` configuration
+- Runnable via **cron**, **GitHub Actions**, or a server scheduler
+
+**Result:** Consistent Shopify catalog, **always aligned** with WooCommerce—no duplicates, no stale items.
