@@ -195,7 +195,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
       <div>
         <h2 className="text-2xl font-semibold mb-6">{t.sections.experience}</h2>
         <ol className="relative border-s border-white/10 space-y-8 ms-3">
-          {t.experience.map((item: any, i: number) => (
+          {t.experience.map((item, i: number) => (
             <li key={i} className="ms-4">
               {/* dot */}
               <span className="absolute -start-2.5 mt-2 h-2.5 w-2.5 rounded-full bg-blue-400 shadow" />

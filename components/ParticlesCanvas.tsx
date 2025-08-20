@@ -2,6 +2,10 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial } from "@react-three/drei";
 import { Suspense, useMemo, useRef } from "react";
+import * as THREE from "three";
+
+
+
 
 export default function ParticlesCanvas() {
   return (
@@ -20,7 +24,7 @@ export default function ParticlesCanvas() {
 }
 
 function Particles() {
-  const ref = useRef<any>(null);
+  const ref = useRef<THREE.Points | null>(null);
 
   // σταθερές, ελαφριές θέσεις
   const positions = useMemo(() => {

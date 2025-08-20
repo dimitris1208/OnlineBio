@@ -10,7 +10,7 @@ export default async function Page({
   params: Promise<{ locale: Locale }>;
 }) {
   const { locale } = await params;
-  const projects = await getAllProjects();
+  const projects = await getAllProjects(locale);
 
   return (
     <div className="space-y-12">

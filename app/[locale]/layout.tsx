@@ -3,7 +3,6 @@ import { ReactNode } from "react";
 import { locales, type Locale } from "@/lib/i18n";
 import LangToggle from "@/components/LangToggle";
 import ParticlesCanvas from "@/components/ParticlesCanvas";
-import { nav } from "framer-motion/client";
 
 export const metadata: Metadata = {
   title: "Dimitris — Portfolio",
