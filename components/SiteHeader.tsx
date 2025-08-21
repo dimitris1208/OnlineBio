@@ -85,7 +85,7 @@ export default function SiteHeader({ locale }: Props) {
       <aside
         id="mobile-drawer"
         className={`fixed left-0 top-0 bottom-0 z-50 w-72 transform transition-transform duration-200
-        bg-white/10 backdrop-blur border-r border-white/10
+        bg-gray-900 backdrop-blur border-r border-white/10
         ${open ? 'translate-x-0' : '-translate-x-full'}`}
         role="dialog"
         aria-modal="true"
