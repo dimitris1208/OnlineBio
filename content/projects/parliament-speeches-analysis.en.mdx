@@ -1,0 +1,68 @@
+---
+title: "Greek Parliament Speeches Analysis (1989–2020)"
+year: 2025
+slug: "parliament-speeches-analysis"
+stack:
+  [
+    "Python",
+    "Pandas",
+    "NumPy",
+    "NLTK",
+    "scikit-learn",
+    "Flask",
+    "HTML",
+    "CSS",
+    "JavaScript",
+  ]
+summary: "A data analysis and information retrieval project analyzing over 1.2 million speeches from the Greek Parliament (1989–2020)."
+locale: "en"
+---
+
+This project was developed for the **“Information Retrieval”** course.  
+It focuses on analyzing **all speeches from the Greek Parliament between 1989 and 2020**.
+
+### Dataset
+
+The dataset, sourced from the [Hellenic Parliament’s website](https://github.com/iMEdD-Lab/Greek_Parliament_Proceedings), contained **1,280,918 speeches** by Greek MPs (2.30 GB total), extracted from **5,355 parliamentary sessions**.  
+Each record included metadata such as the **speaker’s name**, **political party**, **date**, and **session details**.  
+The dataset was provided in a **UTF-8 encoded CSV** file and served as the foundation for multiple analytical tasks.
+
+### Implementation Highlights
+
+- **Web-Based Search Application:**  
+  Developed a web interface functioning as a **custom search engine** for the dataset, allowing users to query and retrieve speeches by keywords, speaker, or date range.
+
+![](/projects/parliament-speeches-analysis/Screenshot_6.png)
+![](/projects/parliament-speeches-analysis/Screenshot_7.png)
+
+- **Keyword Extraction & Temporal Analysis:**  
+  Implemented algorithms to extract the most significant keywords for each **speech**, **MP**, and **party**, followed by time-based trend analysis of these keywords to visualize their evolution.
+
+![](/projects/parliament-speeches-analysis/Screenshot_9.png)
+
+- **Similarity Detection Among MPs:**  
+  Represented each MP’s speeches as **feature vectors** and computed pairwise similarities, identifying the **top-k most similar MPs** based on their speech content.
+
+![](/projects/parliament-speeches-analysis/Screenshot_10.png)
+![](/projects/parliament-speeches-analysis/Screenshot_12.png)
+
+- **Latent Semantic Indexing (LSI):**  
+  Applied **LSI** to uncover **latent thematic structures** across all speeches, enabling dimensionality reduction and clustering of semantic topics.
+
+![](/projects/parliament-speeches-analysis/Screenshot_13.png)
+![](/projects/parliament-speeches-analysis/Screenshot_14.png)
+
+- **Clustering of Speeches:**  
+  Grouped speeches into clusters with **high internal similarity**, revealing distinct political themes and discussion patterns.
+
+![](/projects/parliament-speeches-analysis/Screenshot_15.png)
+
+- **Custom Additional Task:**  
+  Designed and implemented an **extra analysis** proposed by our team, offering unique insights derived from the dataset and extending beyond the required coursework.
+
+![](/projects/parliament-speeches-analysis/Screenshot_17.png)
+
+
+---
+
+This project demonstrates advanced skills in **data analysis, information retrieval, and natural language processing**, combined with practical implementation through a **web-based analytical platform**.
