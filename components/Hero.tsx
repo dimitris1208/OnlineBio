@@ -1,46 +1,44 @@
-"use client";
-import { motion, useMotionValue, useTransform } from "framer-motion";
 import Link from "next/link";
+import MiniFlow from "@/components/MiniFlow";
+import type { Dict } from "@/lib/content";
 
-export default function Hero({ locale }: { locale: "en"|"el" }) {
-  const t = locale === "el"
-    ? { h1: "Γεια, είμαι ο Δημήτρης — Μετατρέπω το αδύνατο σε ψηφιακή πραγματικότητα.", cta: "Δες Έργα" }
-    : { h1: "Hi, I'm Dimitris — Turning the impossible into digital reality.", cta: "View Projects" };
-
-  // magnetic CTA
-  const x = useMotionValue(0), y = useMotionValue(0);
-  const rotateX = useTransform(y, [-40, 40], [8, -8]);
-  const rotateY = useTransform(x, [-40, 40], [-8, 8]);
-
+export default function Hero({ locale, t }: { locale: string; t: Dict["hero"] }) {
   return (
-    <section className="space-y-6">
-      <motion.h1
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: .6 }}
-        className="text-4xl md:text-6xl font-semibold tracking-tight"
-      >
-        {t.h1}
-      </motion.h1>
+    <section
+      id="top"
+      data-node
+      data-label={t.kind}
+      aria-labelledby="hero-title"
+      className="node min-h-[100svh] !pt-28 !pb-20"
+    >
+      <div className="tap tap-lg">
+        <span className="tap-port" aria-hidden="true" />
+        <span className="tap-line" aria-hidden="true" />
+        <p className="label text-lime">{t.kind} · GET /dimitris</p>
+      </div>
 
-      <motion.div
-        onMouseMove={(e) => {
-          const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
-          x.set(e.clientX - rect.left - rect.width / 2);
-          y.set(e.clientY - rect.top - rect.height / 2);
-        }}
-        onMouseLeave={() => { x.set(0); y.set(0); }}
-        style={{ perspective: 600 }}
-      >
-        <motion.div
-          style={{ rotateX, rotateY }}
-          className="inline-block"
-        >
-          <Link href={`/${locale}/projects`} className="inline-block rounded-2xl border border-stroke bg-card px-6 py-3 hover:border-primary hover:shadow-soft transition">
-            {t.cta}
+      <h1 id="hero-title" className="display mt-6 max-w-5xl text-[clamp(2.9rem,7vw,5.75rem)]">
+        <span className="hero-line text-lime">{t.h1a}</span>
+        <span className="hero-line">{t.h1b}</span>
+      </h1>
+
+      <div className="hero-fade">
+        <MiniFlow steps={t.steps} live className="mt-9" />
+        <p className="mt-8 max-w-2xl text-base text-muted md:text-xl">{t.sub}</p>
+
+        <div className="mt-9 flex flex-wrap gap-3">
+          <Link href={`/${locale}#projects`} className="btn btn-solid">
+            {t.cta} <span className="arrow" aria-hidden="true">→</span>
           </Link>
-        </motion.div>
-      </motion.div>
+          <Link href={`/${locale}#contact`} className="btn">
+            {t.cta2}
+          </Link>
+        </div>
+
+        <p className="label mt-12 text-muted" aria-hidden="true">
+          ↓ {t.scroll}
+        </p>
+      </div>
     </section>
   );
 }

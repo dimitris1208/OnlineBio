@@ -1,0 +1,7 @@
+[
+  { "name": "PlanoThess", "url": "https://planothess.com", "platform": "Astro" },
+  { "name": "localstores.gr", "url": "https://localstores.gr", "platform": "Shopify" },
+  { "name": "CarSKG", "url": "https://car-detailing-shop.vercel.app", "platform": "Next.js" },
+  { "name": "Mema Home", "url": "https://memahome-shop.gr", "platform": "WordPress" },
+  { "name": "4ward", "url": "https://4-ward.gr", "platform": "Next.js" }
+]

@@ -9,6 +9,10 @@ stack:
   - GraphQL
   - Docker
 summary: Πλήρης συγχρονισμός (create/update/delete) μεταξύ WooCommerce και Shopify με custom mapping & ασφαλές cleanup.
+problem: "Ο κατάλογος του Shopify έπρεπε να μένει ευθυγραμμισμένος με την πηγή του στο WooCommerce: νέα προϊόντα, αλλαγές και διαγραφές."
+built: "Ένα idempotent Python pipeline που διαβάζει το WooCommerce, χαρτογραφεί τα προϊόντα στο σχήμα του Shopify και κάνει πλήρη συγχρονισμό (create / update / delete) καθημερινά μέσω Docker, με το SKU ως μοναδικό κλειδί, backoff στα rate limits και dry-run πριν από διαγραφές."
+result: "Συνεπής κατάλογος στο Shopify, πάντα ευθυγραμμισμένος με το WooCommerce: χωρίς διπλότυπα, χωρίς παρωχημένα προϊόντα."
+flow: ["WooCommerce","Map","Shopify"]
 locale: el
 ---
 
