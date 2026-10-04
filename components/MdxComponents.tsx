@@ -10,17 +10,18 @@ type FigureProps = Omit<React.ComponentProps<typeof Image>, "src" | "alt"> & {
 
 export function Figure({ src, alt, caption, priority, ...rest }: FigureProps) {
   return (
-    <figure className="my-8 overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+    <figure className="not-prose my-8 overflow-hidden border border-line bg-panel">
       <Image
         src={src}
         alt={alt}
         className="w-full h-auto object-cover"
+        loading={priority ? undefined : "lazy"}
         sizes="(max-width: 768px) 100vw, 800px"
         priority={priority}
         {...rest}
       />
       {caption ? (
-        <figcaption className="px-4 py-3 text-center text-sm text-gray-300/90">
+        <figcaption className="border-t border-line px-4 py-3 font-mono text-xs text-muted">
           {caption}
         </figcaption>
       ) : null}

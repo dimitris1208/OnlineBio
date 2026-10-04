@@ -9,6 +9,10 @@ stack:
   - GraphQL
   - Docker
 summary: Full sync (create/update/delete) between WooCommerce and Shopify with custom mapping & safe cleanup.
+problem: "A Shopify catalog had to stay aligned with its WooCommerce source: new products, changes and removals included."
+built: "An idempotent Python pipeline that reads WooCommerce, maps products to the Shopify schema and runs a full create / update / delete sync every day from Docker, with SKU as the source of truth, rate-limit backoff and a dry-run before deletions."
+result: "A consistent Shopify catalog, always aligned with WooCommerce: no duplicates, no stale items."
+flow: ["WooCommerce","Map","Shopify"]
 locale: en
 ---
 

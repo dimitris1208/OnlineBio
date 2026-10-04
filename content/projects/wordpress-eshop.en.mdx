@@ -4,6 +4,10 @@ year: 2024
 slug: "wordpress-eshop"
 stack: ["WordPress", "WooCommerce", "PHP", "CSS", "Stripe", "Python"]
 summary: "A custom WooCommerce-based eShop with automated product synchronization via a Python script running on a cloud server."
+problem: "An online store whose prices, availability and descriptions depend on a wholesaler's product data, which keeps changing."
+built: "A WooCommerce store with custom CSS and PHP and Stripe checkout, plus a Python script on a Droplet server that fetches the wholesaler's data and updates the products automatically."
+result: "The store always shows up-to-date prices, availability and descriptions, without anyone editing products by hand."
+flow: ["Wholesaler","Python sync","WooCommerce"]
 locale: "en"
 ---
 

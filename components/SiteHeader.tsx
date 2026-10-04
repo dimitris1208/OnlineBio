@@ -1,136 +1,38 @@
-'use client';
+import Link from "next/link";
+import LangToggle from "@/components/LangToggle";
+import MobileMenu from "@/components/MobileMenu";
+import type { Locale } from "@/lib/i18n";
+import type { Dict } from "@/lib/content";
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { Menu, X } from 'lucide-react';
-import LangToggle from '@/components/LangToggle';
+const NODES = ["about", "skills", "experience", "projects", "contact"] as const;
 
-type Props = { locale: string };
-
-export default function SiteHeader({ locale }: Props) {
-  const nav =
-    locale === 'el'
-      ? { projects: 'Έργα', about: 'Σχετικά', contact: 'Επικοινωνία' }
-      : { projects: 'Projects', about: 'About', contact: 'Contact' };
-
-  const [open, setOpen] = useState(false);
-
-  // Κλείσιμο με ESC & κλείδωμα scroll όταν είναι ανοιχτό το drawer
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
-    document.addEventListener('keydown', onKey);
-    if (open) document.body.classList.add('overflow-hidden');
-    else document.body.classList.remove('overflow-hidden');
-    return () => {
-      document.removeEventListener('keydown', onKey);
-      document.body.classList.remove('overflow-hidden');
-    };
-  }, [open]);
-
-  const close = () => setOpen(false);
+export default function SiteHeader({ locale, t }: { locale: Locale; t: Dict["nav"] }) {
+  const items = NODES.map((id) => ({ id, label: t[id], href: `/${locale}#${id}` }));
 
   return (
-    <>
-      <header className="fixed inset-x-0 top-0 z-40">
-        <div className="mx-auto max-w-6xl px-6 py-3 flex items-center justify-between rounded-b-2xl backdrop-blur bg-white/5 border-b border-white/10">
-          <Link
-            href={`/${locale}`}
-            className="text-sm text-gray-400 hover:text-white transition"
-          >
-            Dimitris • Portfolio
-          </Link>
+    <header className="fixed inset-x-0 top-0 z-40 border-b border-line bg-ink/95">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-5 md:px-10">
+        <Link href={`/${locale}`} className="font-display text-2xl font-black uppercase leading-none tracking-wide">
+          Dimitris<span className="text-lime">/</span>
+        </Link>
 
-          {/* Desktop nav */}
-          <nav className="hidden sm:flex items-center gap-6 text-sm text-gray-400">
-            <Link className="hover:text-white transition" href={`/${locale}/projects`}>
-              {nav.projects}
+        <nav className="hidden items-center gap-7 md:flex" aria-label="Main">
+          {items.map((it) => (
+            <Link key={it.id} href={it.href} data-nav={it.id} className="navlink font-mono text-xs uppercase tracking-widest">
+              {it.label}
             </Link>
-            <Link className="hover:text-white transition" href={`/${locale}/about`}>
-              {nav.about}
-            </Link>
-            <Link className="hover:text-white transition" href={`/${locale}/contact`}>
-              {nav.contact}
-            </Link>
-          </nav>
-
-          {/* Desktop LangToggle */}
-          <div className="hidden sm:block">
-            <LangToggle locale={locale as any} />
-          </div>
-
-          {/* Mobile hamburger */}
-          <button
-            type="button"
-            onClick={() => setOpen(true)}
-            className="sm:hidden p-2 rounded-lg border border-white/10 hover:bg-white/10 transition"
-            aria-label="Open menu"
-            aria-expanded={open}
-            aria-controls="mobile-drawer"
-          >
-            <Menu className="w-6 h-6" />
-          </button>
-        </div>
-      </header>
-
-      {/* Overlay */}
-      {open && (
-        <button
-          className="fixed inset-0 z-40 bg-black/50 backdrop-blur-[1px]"
-          onClick={close}
-          aria-label="Close menu overlay"
-        />
-      )}
-
-      {/* Side drawer */}
-      <aside
-        id="mobile-drawer"
-        className={`fixed left-0 top-0 bottom-0 z-50 w-72 transform transition-transform duration-200
-        bg-gray-900 backdrop-blur border-r border-white/10
-        ${open ? 'translate-x-0' : '-translate-x-full'}`}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Mobile navigation"
-      >
-        <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
-          <span className="text-sm text-gray-300">Menu</span>
-          <button
-            onClick={close}
-            className="p-2 rounded-lg border border-white/10 hover:bg-white/10 transition"
-            aria-label="Close menu"
-          >
-            <X className="w-5 h-5" />
-          </button>
-        </div>
-
-        <nav className="p-4 space-y-2">
-          <Link
-            href={`/${locale}/projects`}
-            onClick={close}
-            className="block rounded-lg px-3 py-2 text-sm text-gray-200 hover:bg-white/10"
-          >
-            {nav.projects}
-          </Link>
-          <Link
-            href={`/${locale}/about`}
-            onClick={close}
-            className="block rounded-lg px-3 py-2 text-sm text-gray-200 hover:bg-white/10"
-          >
-            {nav.about}
-          </Link>
-          <Link
-            href={`/${locale}/contact`}
-            onClick={close}
-            className="block rounded-lg px-3 py-2 text-sm text-gray-2 00 hover:bg-white/10"
-          >
-            {nav.contact}
-          </Link>
+          ))}
         </nav>
 
-        {/* Mobile LangToggle μέσα στο drawer */}
-        <div className="mt-auto p-4 border-t border-white/10">
-          <LangToggle locale={locale as any} />
+        <div className="flex items-center gap-3">
+          <div className="hidden md:block">
+            <LangToggle locale={locale} />
+          </div>
+          <MobileMenu items={items} labels={{ menu: t.menu, close: t.close }}>
+            <LangToggle locale={locale} />
+          </MobileMenu>
         </div>
-      </aside>
-    </>
+      </div>
+    </header>
   );
 }

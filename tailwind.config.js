@@ -8,21 +8,20 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        bg: "#0b0f19",
-        fg: "#E6E8EF",
-        muted: "#96A0B5",
-        primary: "#7C9AFF",
-        card: "rgba(255,255,255,0.04)",
-        stroke: "rgba(255,255,255,0.12)"
+        ink: "#07080b",
+        panel: "#0e1116",
+        fg: "#f2f4ef",
+        muted: "#9aa3ae",
+        lime: "#c8ff2e",
+        coral: "#ff5a3c",
+        line: "rgba(255,255,255,0.14)",
       },
-      boxShadow: {
-        soft: "0 8px 30px rgba(0,0,0,0.25)"
+      fontFamily: {
+        display: ["var(--font-display)", "Impact", "sans-serif"],
+        sans: ["var(--font-body)", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
-      borderRadius: {
-        xl2: "1rem",
-        xl3: "1.5rem"
-      }
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 }

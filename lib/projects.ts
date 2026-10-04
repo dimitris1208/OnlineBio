@@ -9,6 +9,11 @@ export type Project = {
   year: number;
   stack: string[];
   summary?: string;
+  // short case study, shown on the home flow and on top of the project page
+  problem?: string;
+  built?: string;
+  result?: string;
+  flow: string[];
   content: string;
   locale: Locale;
 };
@@ -21,6 +26,10 @@ type ProjectFrontmatter = {
   stack?: string[];
   tech?: string[];               // για backward-compat
   summary?: string;
+  problem?: string;
+  built?: string;
+  result?: string;
+  flow?: string[];
   locale?: Locale | string;
 };
 
@@ -59,6 +68,10 @@ function normalize(data: ProjectFrontmatter, content: string): Project {
     year: Number.isFinite(year) ? (year as number) : new Date().getFullYear(),
     stack,
     summary: data.summary ? String(data.summary) : undefined,
+    problem: data.problem ? String(data.problem) : undefined,
+    built: data.built ? String(data.built) : undefined,
+    result: data.result ? String(data.result) : undefined,
+    flow: Array.isArray(data.flow) ? data.flow.map(String) : [],
     content,
     locale,
   };
