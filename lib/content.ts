@@ -2,23 +2,26 @@ import type { Locale } from "./i18n";
 
 export const site = {
   name: "Dimitris Stragalinos",
+  nameEl: "Δημήτρης Στραγαλινός",
+  jobTitle: "Integration Engineer",
   email: "dimstragalinos@outlook.com",
   github: "https://github.com/dimitris1208",
   linkedin: "https://linkedin.com/in/dimitris-stragalinos-229384299",
 };
 
-// TODO: set NEXT_PUBLIC_SITE_URL in Vercel to the production domain (used for canonical URLs, sitemap, OG).
+// The production domain: canonical URLs, hreflang, sitemap, OG and JSON-LD are all built from it.
+// NEXT_PUBLIC_SITE_URL overrides it, if the site ever moves.
 export function siteUrl(): string {
   if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "");
-  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
-  return "http://localhost:3000";
+  if (process.env.NODE_ENV === "development") return "http://localhost:3000";
+  return "https://stragalinos.gr";
 }
 
 const en = {
   meta: {
     title: "Dimitris Stragalinos — Integration Engineer & Developer",
     description:
-      "Integration engineer and full-stack developer. MuleSoft (Anypoint Platform), Dell Boomi, API-led integration, Python, web apps and e-commerce.",
+      "Dimitris Stragalinos, integration engineer and full-stack developer: MuleSoft, Dell Boomi, API-led integration, Python, web apps and e-commerce.",
   },
   nav: {
     about: "About",
@@ -159,7 +162,7 @@ const el: Dict = {
   meta: {
     title: "Δημήτρης Στραγαλινός — Integration Engineer & Developer",
     description:
-      "Integration engineer και full-stack developer. MuleSoft (Anypoint Platform), Dell Boomi, API-led integration, Python, web εφαρμογές και e-commerce.",
+      "Δημήτρης Στραγαλινός, integration engineer και full-stack developer: MuleSoft, Dell Boomi, API-led integration, Python, web εφαρμογές και e-commerce.",
   },
   nav: {
     about: "Σχετικά",

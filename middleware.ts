@@ -11,6 +11,8 @@ export function middleware(req: NextRequest) {
 
   const url = req.nextUrl.clone();
   url.pathname = `/${defaultLocale}${pathname}`;
-  return NextResponse.redirect(url);
+  // permanent, so search engines credit the locale URL instead of the bare one
+  return NextResponse.redirect(url, 308);
 }
-export const config = { matcher: ["/((?!_next|favicon|images).*)"] };
+// icon and apple-icon are the generated icon routes (app/icon.tsx, app/apple-icon.tsx)
+export const config = { matcher: ["/((?!_next|favicon|images|icon|apple-icon).*)"] };
