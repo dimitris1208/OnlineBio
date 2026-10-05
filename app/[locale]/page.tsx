@@ -9,7 +9,9 @@ import ProjectNode from "@/components/ProjectNode";
 import SiteCard from "@/components/SiteCard";
 import { getSites } from "@/lib/sites";
 import { getAllProjects, type Project } from "@/lib/projects";
-import { getDict, site, siteUrl } from "@/lib/content";
+import JsonLd from "@/components/JsonLd";
+import { getDict, site } from "@/lib/content";
+import { homeJsonLd, pageMetadata } from "@/lib/seo";
 import type { Locale } from "@/lib/i18n";
 
 type Params = { params: Promise<{ locale: Locale }> };
@@ -17,21 +19,7 @@ type Params = { params: Promise<{ locale: Locale }> };
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { locale } = await params;
   const t = getDict(locale);
-  return {
-    alternates: {
-      canonical: `/${locale}`,
-      languages: { en: "/en", el: "/el", "x-default": "/en" },
-    },
-    // openGraph is replaced, not merged, by a child segment — so the full object lives here
-    openGraph: {
-      type: "website",
-      siteName: site.name,
-      title: t.meta.title,
-      description: t.meta.description,
-      url: `/${locale}`,
-      locale: locale === "el" ? "el_GR" : "en_US",
-    },
-  };
+  return pageMetadata({ locale, path: "", title: t.meta.title, description: t.meta.description });
 }
 
 export default async function Page({ params }: Params) {
@@ -48,22 +36,9 @@ export default async function Page({ params }: Params) {
   const older = projects.findIndex((p) => p.year < 2025);
   const websitesAt = older === -1 ? projects.length : older;
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: site.name,
-    url: `${siteUrl()}/${locale}`,
-    image: `${siteUrl()}/avatar.jpeg`,
-    email: `mailto:${site.email}`,
-    jobTitle: "Integration Engineer",
-    alumniOf: { "@type": "CollegeOrUniversity", name: "Aristotle University of Thessaloniki" },
-    sameAs: [site.github, site.linkedin],
-    knowsAbout: t.skills.groups.flatMap((g) => g.items),
-  };
-
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <JsonLd data={homeJsonLd(locale, t)} />
 
       <div className="flow">
         <div className="rail" data-rail aria-hidden="true">

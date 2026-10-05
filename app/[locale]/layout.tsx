@@ -28,17 +28,16 @@ export async function generateMetadata({
     metadataBase: new URL(siteUrl()),
     title: { default: t.meta.title, template: `%s — ${site.name}` },
     description: t.meta.description,
-    authors: [{ name: site.name, url: site.linkedin }],
+    applicationName: site.name,
+    authors: [{ name: site.name, url: siteUrl() }],
     creator: site.name,
-    openGraph: {
-      type: "website",
-      siteName: site.name,
-      title: t.meta.title,
-      description: t.meta.description,
-      locale: locale === "el" ? "el_GR" : "en_US",
+    publisher: site.name,
+    // alternates, openGraph and twitter are set per page (lib/seo.ts)
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
     },
-    twitter: { card: "summary_large_image", title: t.meta.title, description: t.meta.description },
-    robots: { index: true, follow: true },
   };
 }
 
